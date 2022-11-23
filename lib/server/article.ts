@@ -36,17 +36,3 @@ export const getArticle = async (
     where,
   });
 };
-
-// export const getAllArticles = async (
-//   where:
-//     | {
-//         collectionId: string;
-//       }
-//     | {
-//         workspaceId: string;
-//       }
-// ): Promise<Article[] | null> => {
-//   return await prisma.article.findMany({
-//     where,
-//   });
-// };

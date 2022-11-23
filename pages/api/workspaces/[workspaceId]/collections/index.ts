@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { createCollection, getCollection } from "@lib/server/collection";
 
 import prisma from "@lib/prisma";
 import { slugify } from "@lib/slugify";
-import { createCollection, getCollection } from "@lib/server/collection";
 
 export default async function handler(
   req: NextApiRequest,
@@ -33,6 +33,13 @@ const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
     },
     orderBy: {
       createdAt: "desc",
+    },
+    include: {
+      _count: {
+        select: {
+          articles: true,
+        },
+      },
     },
   });
 

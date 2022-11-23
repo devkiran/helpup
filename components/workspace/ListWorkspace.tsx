@@ -43,11 +43,8 @@ const ListWorkspace = () => {
                   </Badge>
                 </Group>
                 <Text size="sm" color="dimmed">
-                  {`Last updated: ${dayjs(workspace.updatedAt).format(
-                    "MMM DD, YYYY - hh:mm A"
-                  )}`}
+                  {`${workspace._count.collections} Collections • ${workspace._count.articles} Articles`}
                 </Text>
-                {/* Sun, 13 Nov 2022 at 8:48 AM */}
                 <Box>
                   <Grid>
                     <Grid.Col span={6}>

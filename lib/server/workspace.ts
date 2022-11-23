@@ -24,8 +24,6 @@ export const getWorkspace = async (slug: string): Promise<Workspace | null> => {
 };
 
 export const getAllWorkspaces = async (): Promise<Workspace[] | null> => {
-  // TODO: _count is not working
-
   return await prisma.workspace.findMany({
     include: {
       _count: {
