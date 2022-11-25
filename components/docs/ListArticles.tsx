@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Title, Container, Paper, Text, Stack, Highlight } from "@mantine/core";
 
+import { formatDate } from "@lib/date";
 import { Article } from "@prisma/client";
 
 const ListArticles = ({
@@ -50,7 +51,8 @@ const ListArticles = ({
                     )}
                   </Text>
                   <Text color="dimmed" fz="sm">
-                    {`Last updated on ${article.updatedAt}`}
+                    {/* @ts-ignore */}
+                    {`Last updated on ${formatDate(article.updatedAt.$date)}`}
                   </Text>
                 </Stack>
               </Paper>

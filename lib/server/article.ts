@@ -36,3 +36,64 @@ export const getArticle = async (
     where,
   });
 };
+
+export const getAllArticlesByCollection = async (collectionId: string) => {
+  return await prisma.article.findMany({
+    where: { collectionId },
+  });
+};
+
+// Search articles by search term
+export const searchArticles = async (q: string) => {
+  return await prisma.article.aggregateRaw({
+    pipeline: [
+      {
+        $search: {
+          index: "searchArticles",
+          text: {
+            query: q,
+            path: {
+              wildcard: "*",
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          contentText: 1,
+          updatedAt: 1,
+          slug: 1,
+        },
+      },
+    ],
+  });
+};
+
+// Autocomplete articles by search term
+
+export const autocompleteArticles = async (q: string) => {
+  return await prisma.article.aggregateRaw({
+    pipeline: [
+      {
+        $search: {
+          index: "autocomplete",
+          autocomplete: {
+            query: q,
+            path: "contentText",
+            tokenOrder: "sequential",
+          },
+        },
+      },
+      {
+        $limit: 5,
+      },
+      {
+        $project: {
+          title: 1,
+          slug: 1,
+        },
+      },
+    ],
+  });
+};

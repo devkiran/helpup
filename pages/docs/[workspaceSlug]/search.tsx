@@ -5,6 +5,7 @@ import prisma from "@lib/prisma";
 import { Article } from "@prisma/client";
 import ListArticles from "@components/docs/ListArticles";
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
+import { searchArticles } from "@lib/server/article";
 
 const Search = ({ articles }: { articles: Article[] }) => {
   const router = useRouter();
@@ -43,29 +44,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // TODO: Filter by workspaceId
 
-  const articles = await prisma.article.aggregateRaw({
-    pipeline: [
-      {
-        $search: {
-          index: "searchArticles",
-          text: {
-            query: q,
-            path: {
-              wildcard: "*",
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          title: 1,
-          contentText: 1,
-          updatedAt: 1,
-          slug: 1,
-        },
-      },
-    ],
-  });
+  const articles = await searchArticles(q);
 
   return {
     props: { articles: JSON.parse(JSON.stringify(articles)) },

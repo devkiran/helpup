@@ -3,7 +3,7 @@ import type { GetServerSidePropsContext } from "next";
 
 import { Article } from "@prisma/client";
 import { getWorkspace } from "@lib/server/workspace";
-import { getAllArticles } from "@lib/server/article";
+import { getAllArticlesByCollection } from "@lib/server/article";
 import { getCollection } from "@lib/server/collection";
 import ListArticles from "@components/docs/ListArticles";
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
@@ -48,7 +48,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const articles = await getAllArticles(workspaceId, collection.id);
+  const articles = await getAllArticlesByCollection(collection.id);
 
   return {
     props: { articles: JSON.parse(JSON.stringify(articles)) },
