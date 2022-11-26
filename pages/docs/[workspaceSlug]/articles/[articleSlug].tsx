@@ -1,40 +1,21 @@
 import { useRouter } from "next/router";
 import type { GetServerSidePropsContext } from "next";
-import { Container, Paper, Stack, Title } from "@mantine/core";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 
-import { Article } from "@prisma/client";
 import { getArticle } from "@lib/server/article";
 import { getWorkspace } from "@lib/server/workspace";
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
+import ArticleInfo from "@components/docs/Article";
+import { Article } from "@prisma/client";
 
 const Article = ({ article }: { article: Article }) => {
   const router = useRouter();
 
   const { workspaceSlug } = router.query as { workspaceSlug: string };
 
-  const editor = useEditor({
-    content: article.contentHtml,
-    editable: false,
-    extensions: [StarterKit],
-  });
-
   return (
     <>
       <ArticleSearchBar workspaceSlug={workspaceSlug} />
-      <Container size="md" px="xl" py="xl" className="bg-gray-50">
-        <Paper p={50} withBorder>
-          <Stack>
-            <Title order={2} weight={500}>
-              {article.title}
-            </Title>
-            <div>
-              <EditorContent editor={editor} />
-            </div>
-          </Stack>
-        </Paper>
-      </Container>
+      <ArticleInfo article={article} />
     </>
   );
 };
