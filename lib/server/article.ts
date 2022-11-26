@@ -1,6 +1,5 @@
-import { Article, Prisma } from "@prisma/client";
-
 import prisma from "@lib/prisma";
+import { Article } from "@prisma/client";
 
 export const createArticle = async (
   data: Omit<Article, "id" | "createdAt" | "updatedAt">
@@ -10,20 +9,6 @@ export const createArticle = async (
 
   return await prisma.article.create({
     data: { title, slug, contentHtml, contentText, workspaceId, collectionId },
-  });
-};
-
-export const updateArticle = async (
-  id: string,
-  data: Omit<Article, "id" | "createdAt" | "updatedAt" | "workspaceId">
-): Promise<Article> => {
-  const { title, slug, contentHtml, contentText, collectionId } = data;
-
-  return await prisma.article.update({
-    where: {
-      id,
-    },
-    data: { title, slug, contentHtml, contentText, collectionId },
   });
 };
 
@@ -71,7 +56,6 @@ export const searchArticles = async (q: string) => {
 };
 
 // Autocomplete articles by search term
-
 export const autocompleteArticles = async (q: string) => {
   return await prisma.article.aggregateRaw({
     pipeline: [

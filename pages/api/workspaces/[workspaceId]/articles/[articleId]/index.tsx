@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getArticle, updateArticle } from "@lib/server/article";
 
+import { getArticle } from "@lib/server/article";
 import { slugify } from "@lib/slugify";
+import prisma from "@lib/prisma";
 
 export default async function handler(
   req: NextApiRequest,
@@ -57,7 +58,7 @@ const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
   const article = await getArticle({ workspaceId, id: articleId });
 
   if (!article) {
-    res.status(404).json({ error: { message: "Article not found" } });
+    return res.status(404).json({ error: { message: "Article not found" } });
   }
 
   const slug = slugify(title);
@@ -68,12 +69,9 @@ const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
   //   });
   // }
 
-  const articleUpdated = await updateArticle(articleId, {
-    title,
-    slug,
-    contentText,
-    contentHtml,
-    collectionId,
+  const articleUpdated = await prisma.article.update({
+    where: { id: article.id },
+    data: { title, slug, contentText, contentHtml, collectionId },
   });
 
   res.status(200).json({ data: articleUpdated });

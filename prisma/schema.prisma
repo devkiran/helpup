@@ -35,15 +35,17 @@ model Collection {
 }
 
 model Article {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  workspaceId  String   @db.ObjectId
-  collectionId String   @db.ObjectId
-  title        String
-  slug         String   @unique
-  contentHtml  String
-  contentText  String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  workspaceId     String   @db.ObjectId
+  collectionId    String   @db.ObjectId
+  title           String
+  slug            String   @unique
+  contentHtml     String
+  contentText     String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  helpfulCount    Int      @default(0)
+  notHelpfulCount Int      @default(0)
 
   workspace  Workspace  @relation(fields: [workspaceId], references: [id])
   collection Collection @relation(fields: [collectionId], references: [id])

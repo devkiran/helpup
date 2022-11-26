@@ -1,4 +1,4 @@
-import { Container, Paper, Stack, Title } from "@mantine/core";
+import { Paper, Stack, Title } from "@mantine/core";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -12,18 +12,16 @@ const Article = ({ article }: { article: Article }) => {
   });
 
   return (
-    <Container size="md" px="xl" py="xl" className="bg-gray-50">
-      <Paper p={50} withBorder>
-        <Stack>
-          <Title order={2} weight={500}>
-            {article.title}
-          </Title>
-          <div>
-            <EditorContent editor={editor} />
-          </div>
-        </Stack>
-      </Paper>
-    </Container>
+    <Paper p={50} withBorder>
+      <Stack>
+        <Title order={2} weight={500}>
+          {article.title}
+        </Title>
+        <div>
+          <EditorContent editor={editor} />
+        </div>
+      </Stack>
+    </Paper>
   );
 };
 

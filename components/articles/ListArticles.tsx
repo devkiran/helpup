@@ -1,8 +1,8 @@
-import dayjs from "dayjs";
+import Link from "next/link";
 import { Loader, Table } from "@mantine/core";
 
+import { formatDate } from "@lib/date";
 import useArticles from "@lib/hooks/useArticles";
-import Link from "next/link";
 
 const ListArticles = ({ workspaceId }: { workspaceId: string }) => {
   const { articles, isLoading } = useArticles(workspaceId);
@@ -36,9 +36,9 @@ const ListArticles = ({ workspaceId }: { workspaceId: string }) => {
                   </Link>
                 </td>
                 <td>{article.collection.title}</td>
-                <td>1</td>
-                <td>2</td>
-                <td>{dayjs(article.updatedAt).format("MMM DD, YYYY")}</td>
+                <td>{article.helpfulCount}</td>
+                <td>{article.notHelpfulCount}</td>
+                <td>{formatDate(article.updatedAt)}</td>
               </tr>
             );
           })}
