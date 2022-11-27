@@ -1,12 +1,10 @@
 import prisma from "@lib/prisma";
 import { Workspace } from "@prisma/client";
 
-const userId = "d29997b6-8783-4dff-9023-d9271ea8d78f";
-
 export const createWorkspace = async (
-  data: Pick<Workspace, "name" | "slug">
+  data: Pick<Workspace, "name" | "slug"> & { userId: string }
 ): Promise<Workspace> => {
-  const { name, slug } = data;
+  const { name, slug, userId } = data;
 
   return await prisma.workspace.create({
     data: {
@@ -23,8 +21,13 @@ export const getWorkspace = async (slug: string): Promise<Workspace | null> => {
   });
 };
 
-export const getAllWorkspaces = async (): Promise<Workspace[] | null> => {
+export const getAllWorkspaces = async (
+  userId: string
+): Promise<Workspace[] | null> => {
   return await prisma.workspace.findMany({
+    where: {
+      userId,
+    },
     include: {
       _count: {
         select: {

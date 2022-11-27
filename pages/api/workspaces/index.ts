@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { getUser } from "@lib/server/user";
+
 import {
   createWorkspace,
   getWorkspace,
@@ -28,7 +30,9 @@ export default async function handler(
 }
 
 const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
-  const workspaces = await getAllWorkspaces();
+  const user = await getUser(req, res);
+
+  const workspaces = await getAllWorkspaces(user.id);
 
   res.status(200).json({ data: workspaces });
 };
@@ -44,7 +48,9 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const workspace = await createWorkspace({ name, slug });
+  const user = await getUser(req, res);
+
+  const workspace = await createWorkspace({ name, slug, userId: user.id });
 
   res.status(201).json({ data: workspace });
 };
