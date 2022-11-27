@@ -30,7 +30,7 @@ const ListArticles = ({ workspaceId }: { workspaceId: string }) => {
                 <td>
                   <Link
                     href={`/workspaces/${workspaceId}/articles/${article.id}`}
-                    className="hover:underline"
+                    className="underline underline-offset-2"
                   >
                     {article.title}
                   </Link>

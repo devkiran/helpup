@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ThemeIcon, UnstyledButton, Group, Text } from "@mantine/core";
-import { IconDashboard, IconSettings, IconFolders } from "@tabler/icons";
+import { IconSettings, IconFolders } from "@tabler/icons";
 
 interface MainLinkProps {
   icon: React.ReactNode;
@@ -11,12 +11,6 @@ interface MainLinkProps {
 }
 
 const menus = [
-  {
-    icon: <IconDashboard size={16} />,
-    color: "blue",
-    label: "Dashboard",
-    href: "/dashboard",
-  },
   {
     icon: <IconFolders size={16} />,
     color: "red",

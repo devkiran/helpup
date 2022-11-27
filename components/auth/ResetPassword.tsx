@@ -51,7 +51,7 @@ const ResetPassword = () => {
         message: "Your password has been updated successfully.",
       });
 
-      router.push("/dashboard");
+      router.push("/workspaces");
     }
   };
 

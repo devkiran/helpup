@@ -9,7 +9,7 @@ const SignUpPage = () => {
 
   useEffect(() => {
     if (user) {
-      router.replace("/dashboard");
+      router.replace("/workspaces");
     }
   }, [user, router]);
 
