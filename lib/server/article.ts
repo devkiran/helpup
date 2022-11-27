@@ -22,24 +22,25 @@ export const getArticle = async (
   });
 };
 
-export const getAllArticlesByCollection = async (collectionId: string) => {
-  return await prisma.article.findMany({
-    where: { collectionId },
-  });
-};
-
 // Search articles by search term
-export const searchArticles = async (q: string) => {
+export const searchArticles = async (workspaceId: string, q: string) => {
   return await prisma.article.aggregateRaw({
     pipeline: [
       {
         $search: {
           index: "searchArticles",
-          text: {
-            query: q,
-            path: {
-              wildcard: "*",
-            },
+          compound: {
+            should: [
+              {
+                text: {
+                  query: q,
+                  path: {
+                    wildcard: "*",
+                  },
+                },
+              },
+            ],
+            minimumShouldMatch: 1,
           },
         },
       },
