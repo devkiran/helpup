@@ -10,6 +10,7 @@ import { showError, showSuccess } from "@lib/client/notification";
 import { ArticleEditor } from "@components/articles/ArticleEditor";
 import useCollections from "@lib/hooks/useCollections";
 import useArticle from "@lib/hooks/useArticle";
+import DeleteArticle from "@components/articles/DeleteArticle";
 
 const UpdateArticle = ({
   workspaceId,
@@ -88,6 +89,7 @@ const UpdateArticle = ({
     <form method="POST" onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <Group position="right">
+          <DeleteArticle workspaceId={workspaceId} articleId={articleId} />
           <Button color="cyan" type="submit" loading={loading}>
             Save
           </Button>

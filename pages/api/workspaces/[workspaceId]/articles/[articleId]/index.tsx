@@ -15,8 +15,10 @@ export default async function handler(
       return handleGET(req, res);
     case "PUT":
       return handlePUT(req, res);
+    case "DELETE":
+      return handleDELETE(req, res);
     default:
-      res.setHeader("Allow", ["GET", "PUT"]);
+      res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
       res.status(405).json({
         data: null,
         error: { message: `Method ${method} Not Allowed` },
@@ -75,4 +77,27 @@ const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   res.status(200).json({ data: articleUpdated });
+};
+
+const handleDELETE = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { workspaceId, articleId } = req.query as {
+    workspaceId: string;
+    articleId: string;
+  };
+
+  const article = await getArticle({ workspaceId, id: articleId });
+
+  if (!article) {
+    return res.status(404).json({ error: { message: "Article not found" } });
+  }
+
+  if (article.workspaceId !== workspaceId) {
+    return res.status(403).json({ error: { message: "Forbidden" } });
+  }
+
+  await prisma.article.delete({
+    where: { id: articleId },
+  });
+
+  res.status(200).json({ data: {} });
 };
