@@ -1,15 +1,20 @@
 import * as Yup from "yup";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Highlight from "@tiptap/extension-highlight";
 import { useForm, yupResolver } from "@mantine/form";
 import { Stack, TextInput, Button, Group, Select } from "@mantine/core";
 
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Highlight from "@tiptap/extension-highlight";
+import Underline from "@tiptap/extension-underline";
+import BulletList from "@tiptap/extension-bullet-list";
+import ListItem from "@tiptap/extension-list-item";
+import Link from "@tiptap/extension-link";
+
+import useCollections from "@lib/hooks/useCollections";
 import { showError, showSuccess } from "@lib/client/notification";
 import { ArticleEditor } from "@components/articles/ArticleEditor";
-import useCollections from "@lib/hooks/useCollections";
 
 const CreateNewArticle = ({ workspaceId }: { workspaceId: string }) => {
   const router = useRouter();
@@ -17,8 +22,7 @@ const CreateNewArticle = ({ workspaceId }: { workspaceId: string }) => {
   const { collections } = useCollections(workspaceId);
 
   const editor = useEditor({
-    extensions: [StarterKit, Highlight],
-    content: "Type your content here...",
+    extensions: [StarterKit, Highlight, Underline, BulletList, ListItem, Link],
   });
 
   const form = useForm({

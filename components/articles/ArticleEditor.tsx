@@ -31,15 +31,7 @@ export const ArticleEditor = ({ editor }: { editor: any }) => {
           <RichTextEditor.Link />
           <RichTextEditor.Unlink />
         </RichTextEditor.ControlsGroup>
-
-        <RichTextEditor.ControlsGroup>
-          <RichTextEditor.AlignLeft />
-          <RichTextEditor.AlignCenter />
-          <RichTextEditor.AlignJustify />
-          <RichTextEditor.AlignRight />
-        </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
-
       <RichTextEditor.Content />
     </RichTextEditor>
   );
