@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ThemeIcon, UnstyledButton, Group, Text } from "@mantine/core";
-import { IconSettings, IconFolders } from "@tabler/icons";
+import { IconSettings, IconFolders, IconLogout } from "@tabler/icons";
 
 interface MainLinkProps {
   icon: React.ReactNode;
@@ -22,6 +22,12 @@ const menus = [
     color: "teal",
     label: "Account",
     href: "/account",
+  },
+  {
+    icon: <IconLogout size={16} />,
+    color: "blue",
+    label: "Sign out",
+    href: "/signout",
   },
 ];
 
