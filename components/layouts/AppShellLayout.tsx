@@ -10,15 +10,14 @@ import {
   Loader,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { useSessionContext } from "@supabase/auth-helpers-react";
+import { useSessionContext, useUser } from "@supabase/auth-helpers-react";
 
-import { User } from "@components/core/User";
 import { Logo } from "@components/core/Logo";
 import { MainLinks } from "@components/core/MainLink";
 
 const AppShellLayout = ({ children }: { children: React.ReactNode }) => {
-  const [opened, setOpened] = useState(false);
   const router = useRouter();
+  const [opened, setOpened] = useState(false);
   const { isLoading, session, error } = useSessionContext();
 
   if (isLoading) {
@@ -46,9 +45,6 @@ const AppShellLayout = ({ children }: { children: React.ReactNode }) => {
         >
           <Navbar.Section grow mt="xs">
             <MainLinks />
-          </Navbar.Section>
-          <Navbar.Section>
-            <User />
           </Navbar.Section>
         </Navbar>
       }

@@ -9,10 +9,10 @@ import {
   Box,
   useMantineTheme,
 } from "@mantine/core";
+import type { User } from "@supabase/supabase-js";
 
-export function User() {
+export function User({ user }: { user: User | null }) {
   const theme = useMantineTheme();
-  const user = useUser();
 
   return (
     <Box
@@ -43,10 +43,9 @@ export function User() {
         }}
       >
         <Group>
-          <Avatar
-            src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-            radius="xl"
-          />
+          <Avatar src={null} alt="Vitaly Rtishchev" color="red">
+            VR
+          </Avatar>
           {user && (
             <Box sx={{ flex: 1, overflow: "hidden" }}>
               <Text size="sm" weight={500} lineClamp={1}>
