@@ -1,0 +1,19 @@
+{
+  "mappings": {
+    "dynamic": false,
+    "fields": {
+      "contentText": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "workspaceId": {
+        "type": "objectId"
+      }
+    }
+  },
+  "storedSource": {
+    "include": ["workspaceId"]
+  }
+}

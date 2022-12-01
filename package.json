@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-saas-kit",
+  "name": "knowledge-base-builder",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -35,9 +35,11 @@
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
+    "bson": "^4.7.0",
     "dayjs": "^1.11.6",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
+    "mongoose": "^6.7.3",
     "next": "13.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
