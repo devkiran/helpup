@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { slugify } from "@lib/slugify";
 import prisma from "@lib/prisma";
-import { createArticle, getArticle } from "@lib/server/article";
+import { slugify } from "@lib/slugify";
+import { getArticle } from "@lib/server/article";
 
 export default async function handler(
   req: NextApiRequest,
@@ -66,14 +66,16 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const article = await createArticle({
-    title,
-    slug,
-    contentText,
-    contentHtml,
-    workspaceId,
-    collectionId,
+  const article = await prisma.article.create({
+    data: {
+      title,
+      slug,
+      contentText,
+      contentHtml,
+      workspaceId,
+      collectionId,
+    },
   });
 
-  res.status(201).json({ data: article });
+  return res.status(201).json({ data: article });
 };

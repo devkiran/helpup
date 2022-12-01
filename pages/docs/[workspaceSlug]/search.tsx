@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 import type { GetServerSidePropsContext } from "next";
 
 import { Article } from "@prisma/client";
-import { searchArticles } from "@lib/server/article";
-import ListArticles from "@components/docs/ListArticles";
-import ArticleSearchBar from "@components/docs/ArticleSearchBar";
+import { searchArticles } from "@lib/server/atlas";
 import { getWorkspace } from "@lib/server/workspace";
+import ListArticles from "@components/docs/ListArticles";
+
+import ArticleSearchBar from "@components/docs/ArticleSearchBar";
 
 const Search = ({ articles }: { articles: Article[] }) => {
   const router = useRouter();
@@ -50,11 +51,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const { id: workspaceId } = workspace;
-
-  const articles = await searchArticles(workspaceId, q);
-
-  console.log({ articles });
+  const articles = await searchArticles(q, workspace.id);
 
   return {
     props: { articles: JSON.parse(JSON.stringify(articles)) },

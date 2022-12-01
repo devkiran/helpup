@@ -58,8 +58,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  // TODO: Fetch collections with articles count
-
   const collections = await prisma.collection.findMany({
     where: {
       workspaceId: workspace.id,
