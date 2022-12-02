@@ -9,12 +9,15 @@ datasource db {
 }
 
 model Workspace {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  slug      String   @unique
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String   @unique
+  userId      String
+  siteName    String
+  heading     String
+  headerColor String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   articles    Article[]
   collections Collection[]

@@ -49,7 +49,7 @@ const ListWorkspace = () => {
                     <Grid.Col span={6}>
                       <Button
                         component={Link}
-                        href={`/workspaces/${workspace.id}/collections`}
+                        href={`/workspaces/${workspace.id}/articles`}
                         variant="outline"
                         size="xs"
                         color="cyan"

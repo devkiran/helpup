@@ -11,6 +11,9 @@ export const createWorkspace = async (
       name,
       slug,
       userId,
+      headerColor: "rgb(37 99 235)",
+      siteName: name,
+      heading: `Articles and suggestions from ${name}`,
     },
   });
 };

@@ -3,21 +3,27 @@ import { Container } from "@mantine/core";
 import type { GetServerSidePropsContext } from "next";
 
 import prisma from "@lib/prisma";
-import { Collection, Article } from "@prisma/client";
+import { Collection, Article, Workspace } from "@prisma/client";
 import { getWorkspace } from "@lib/server/workspace";
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
 import CollectionCard from "@components/docs/CollectionCard";
 
 type ArticleWithCollection = Collection & { articles: Article[] };
 
-const Home = ({ collections }: { collections: ArticleWithCollection[] }) => {
+const Home = ({
+  collections,
+  workspace,
+}: {
+  collections: ArticleWithCollection[];
+  workspace: Workspace;
+}) => {
   const router = useRouter();
 
   const { workspaceSlug } = router.query as { workspaceSlug: string };
 
   return (
     <>
-      <ArticleSearchBar workspaceSlug={workspaceSlug} />
+      <ArticleSearchBar workspace={workspace} />
       <Container size="xl" px="xl" py="xl" className="bg-gray-50">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-6 gap-6">
           {collections.map((collection) => (
@@ -56,7 +62,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   return {
-    props: { collections: JSON.parse(JSON.stringify(collections)) },
+    props: {
+      collections: JSON.parse(JSON.stringify(collections)),
+      workspace: JSON.parse(JSON.stringify(workspace)),
+    },
   };
 }
 
