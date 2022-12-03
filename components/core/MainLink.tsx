@@ -1,7 +1,5 @@
-import React from "react";
 import Link from "next/link";
 import { ThemeIcon, UnstyledButton, Group, Text } from "@mantine/core";
-import { IconSettings, IconFolders, IconLogout } from "@tabler/icons";
 
 interface MainLinkProps {
   icon: React.ReactNode;
@@ -10,28 +8,7 @@ interface MainLinkProps {
   href: string;
 }
 
-const menus = [
-  {
-    icon: <IconFolders size={16} />,
-    color: "red",
-    label: "Workspaces",
-    href: "/workspaces",
-  },
-  {
-    icon: <IconSettings size={16} />,
-    color: "teal",
-    label: "Account",
-    href: "/account",
-  },
-  {
-    icon: <IconLogout size={16} />,
-    color: "blue",
-    label: "Sign out",
-    href: "/signout",
-  },
-];
-
-function MainLink({ icon, color, label, href }: MainLinkProps) {
+export const MainLink = ({ icon, color, label, href }: MainLinkProps) => {
   return (
     <UnstyledButton
       sx={(theme) => ({
@@ -49,24 +26,14 @@ function MainLink({ icon, color, label, href }: MainLinkProps) {
         },
       })}
     >
-      <Group>
-        <ThemeIcon color={color} variant="light">
-          {icon}
-        </ThemeIcon>
-        <Text size="sm">
-          <Link href={href}>{label}</Link>
-        </Text>
-      </Group>
+      <Link href={href}>
+        <Group>
+          <ThemeIcon color={color} variant="light">
+            {icon}
+          </ThemeIcon>
+          <Text size="sm">{label}</Text>
+        </Group>
+      </Link>
     </UnstyledButton>
   );
-}
-
-export function MainLinks() {
-  return (
-    <>
-      {menus.map((link) => (
-        <MainLink {...link} key={link.label} />
-      ))}
-    </>
-  );
-}
+};

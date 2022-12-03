@@ -10,27 +10,33 @@ import {
   Loader,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { useSessionContext, useUser } from "@supabase/auth-helpers-react";
+import { useSessionContext } from "@supabase/auth-helpers-react";
 
 import { Logo } from "@components/core/Logo";
-import { MainLinks } from "@components/core/MainLink";
+import { MainLinks } from "@components/core/MainLinks";
+import { WorkspaceLinks } from "@components/core/WorkspaceLinks";
+import { WorkspaceChooser } from "@components/core/WorkspaceChooser";
 
 const AppShellLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [opened, setOpened] = useState(false);
-  const { isLoading, session, error } = useSessionContext();
+  const { isLoading, session } = useSessionContext();
+
+  const { workspaceId } = router.query as { workspaceId: string };
 
   if (isLoading) {
     return <Loader />;
   }
 
-  if (error) {
-    return <p>{error.message}</p>;
-  }
-
   if (!session) {
     router.replace("/signin");
   }
+
+  const isWorkspace = router.pathname.startsWith("/workspaces/");
+
+  const workspaceHasSelected = (workspaceId: string) => {
+    router.push(`/workspaces/${workspaceId}/articles`);
+  };
 
   return (
     <AppShell
@@ -44,7 +50,17 @@ const AppShellLayout = ({ children }: { children: React.ReactNode }) => {
           width={{ base: 250 }}
         >
           <Navbar.Section grow mt="xs">
-            <MainLinks />
+            {isWorkspace ? (
+              <>
+                <WorkspaceChooser
+                  workspaceSelected={workspaceHasSelected}
+                  currentWorkspaceId={workspaceId}
+                />
+                <WorkspaceLinks workspaceId={workspaceId} />
+              </>
+            ) : (
+              <MainLinks />
+            )}
           </Navbar.Section>
         </Navbar>
       }
