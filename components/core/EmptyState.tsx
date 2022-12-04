@@ -2,6 +2,14 @@ import Link from "next/link";
 import { IconMoodEmpty } from "@tabler/icons";
 import { Stack, Title, Paper, Text, Button } from "@mantine/core";
 
+type Props = {
+  title: string;
+  description?: string;
+  buttonText?: string;
+  href?: string;
+  onClick?: () => void;
+};
+
 const EmptyState = (props: Props) => {
   const { title, description, buttonText, onClick, href } = props;
 
@@ -21,11 +29,3 @@ const EmptyState = (props: Props) => {
 };
 
 export default EmptyState;
-
-type Props = {
-  title: string;
-  description?: string;
-  buttonText?: string;
-  href?: string;
-  onClick?: () => void;
-};

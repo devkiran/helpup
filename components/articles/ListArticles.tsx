@@ -3,12 +3,17 @@ import { Loader, Table } from "@mantine/core";
 
 import { formatDate } from "@lib/date";
 import useArticles from "@lib/hooks/useArticles";
+import EmptyState from "@components/core/EmptyState";
 
 const ListArticles = ({ workspaceId }: { workspaceId: string }) => {
   const { articles, isLoading } = useArticles(workspaceId);
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (articles && articles.length === 0) {
+    return <EmptyState title="No articles found" />;
   }
 
   return (
