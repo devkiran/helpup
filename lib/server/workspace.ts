@@ -11,7 +11,7 @@ export const createWorkspace = async (
       name,
       slug,
       userId,
-      headerColor: "rgb(37 99 235)",
+      headerColor: "rgb(59, 130, 246)",
       siteName: name,
       heading: `Articles and suggestions from ${name}`,
     },
