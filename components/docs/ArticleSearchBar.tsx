@@ -6,18 +6,30 @@ import { Article, Workspace } from "@prisma/client";
 
 type SearchResults = Pick<Article, "title" | "slug">[];
 
-const ArticleSearchBar = ({
-  workspace,
-  q = "",
-}: {
+type ArticleSearchBarProps = {
   workspace: Workspace;
   q?: string;
-}) => {
-  const [searchTerm, setSearchTerm] = useState("");
+};
+
+type SearchResultItemsProps = {
+  searchResults: SearchResults;
+  onItemClick: (slug: string) => void;
+};
+
+const ArticleSearchBar = (props: ArticleSearchBarProps) => {
+  const { workspace, q } = props;
+
+  const [searchQuery, setSearchQuery] = useState(q || ""); // Search query
+  const [searchTerm, setSearchTerm] = useState(""); // Autocomplete search term
   const [searchResults, setSearchResults] = useState<SearchResults>([]);
 
   useEffect(() => {
     const autocompleteArticles = async () => {
+      if (searchTerm.length === 0) {
+        setSearchResults([]);
+        return;
+      }
+
       const response = await fetch(
         `/api/workspaces/${
           workspace.slug
@@ -29,16 +41,19 @@ const ArticleSearchBar = ({
       setSearchResults(data);
     };
 
-    if (searchTerm.length > 2) {
-      autocompleteArticles();
-    }
+    autocompleteArticles();
   }, [searchTerm]);
 
-  const handleSelect = (slug: string) => {
+  const onItemClick = (slug: string) => {
     setSearchTerm("");
     setSearchResults([]);
 
     window.location.href = `/docs/${workspace.slug}/articles/${slug}`;
+  };
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery("");
+    setSearchTerm(event.currentTarget.value);
   };
 
   return (
@@ -48,7 +63,7 @@ const ArticleSearchBar = ({
           <Title order={1} color="white" align="center">
             {workspace.heading}
           </Title>
-          <div className="flex w-full md:w-1/2">
+          <div className="flex w-full md:w-1/2 static">
             <form
               className="w-full"
               method="GET"
@@ -62,29 +77,40 @@ const ArticleSearchBar = ({
                 className="w-full rounded-md"
                 required
                 name="q"
-                onChange={(event) => setSearchTerm(event.currentTarget.value)}
-                value={searchTerm || q}
+                value={searchQuery || searchTerm}
+                onChange={onChange}
               />
-              {searchResults.length > 0 && (
-                <ul className="flex flex-col bg-white rounded-md mt-2 divide-y px-6 py-3 z-50">
-                  {searchResults.map((article) => (
-                    <li
-                      key={article.slug}
-                      className="py-3 cursor-pointer"
-                      onClick={() => {
-                        handleSelect(article.slug);
-                      }}
-                    >
-                      {article.title}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </form>
+            {searchResults.length > 0 && (
+              <SearchResultItems
+                searchResults={searchResults}
+                onItemClick={onItemClick}
+              />
+            )}
           </div>
         </div>
       </div>
     </section>
+  );
+};
+
+const SearchResultItems = (props: SearchResultItemsProps) => {
+  const { searchResults, onItemClick } = props;
+
+  return (
+    <ul className="flex flex-col bg-white rounded-md mt-16 divide-y px-4 py-3 z-[100] absolute w-[35rem] top-50 border">
+      {searchResults.map((article) => (
+        <li
+          key={article.slug}
+          className="py-3 cursor-pointer"
+          onClick={() => {
+            onItemClick(article.slug);
+          }}
+        >
+          {article.title}
+        </li>
+      ))}
+    </ul>
   );
 };
 
