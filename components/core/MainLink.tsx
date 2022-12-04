@@ -1,39 +1,27 @@
 import Link from "next/link";
-import { ThemeIcon, UnstyledButton, Group, Text } from "@mantine/core";
+import { ThemeIcon, Group, Text } from "@mantine/core";
 
-interface MainLinkProps {
+type MainLinkProps = {
   icon: React.ReactNode;
   color: string;
   label: string;
   href: string;
-}
+  active: boolean;
+};
 
-export const MainLink = ({ icon, color, label, href }: MainLinkProps) => {
+export const MainLink = (props: MainLinkProps) => {
+  const { icon, color, label, href, active } = props;
+
+  const activeClass = active ? "bg-gray-300" : "hover:bg-gray-100";
+
   return (
-    <Link href={href}>
-      <UnstyledButton
-        sx={(theme) => ({
-          display: "block",
-          width: "100%",
-          padding: theme.spacing.xs,
-          borderRadius: theme.radius.sm,
-          color:
-            theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-          "&:hover": {
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[6]
-                : theme.colors.gray[0],
-          },
-        })}
-      >
-        <Group>
-          <ThemeIcon color={color} variant="light">
-            {icon}
-          </ThemeIcon>
-          <Text size="sm">{label}</Text>
-        </Group>
-      </UnstyledButton>
+    <Link href={href} className={`flex w-full rounded-md p-2 ${activeClass}`}>
+      <Group>
+        <ThemeIcon color={color} variant="light">
+          {icon}
+        </ThemeIcon>
+        <Text size="sm">{label}</Text>
+      </Group>
     </Link>
   );
 };

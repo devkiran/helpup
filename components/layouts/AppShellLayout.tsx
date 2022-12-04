@@ -38,6 +38,18 @@ const AppShellLayout = ({ children }: { children: React.ReactNode }) => {
     router.push(`/workspaces/${workspaceId}/articles`);
   };
 
+  const sidebarLinks = isWorkspace ? (
+    <>
+      <WorkspaceChooser
+        workspaceSelected={workspaceHasSelected}
+        currentWorkspaceId={workspaceId}
+      />
+      <WorkspaceLinks workspaceId={workspaceId} currentPath={router.asPath} />
+    </>
+  ) : (
+    <MainLinks currentPath={router.asPath} />
+  );
+
   return (
     <AppShell
       padding="md"
@@ -50,17 +62,7 @@ const AppShellLayout = ({ children }: { children: React.ReactNode }) => {
           width={{ base: 250 }}
         >
           <Navbar.Section grow mt="xs">
-            {isWorkspace ? (
-              <>
-                <WorkspaceChooser
-                  workspaceSelected={workspaceHasSelected}
-                  currentWorkspaceId={workspaceId}
-                />
-                <WorkspaceLinks workspaceId={workspaceId} />
-              </>
-            ) : (
-              <MainLinks />
-            )}
+            {sidebarLinks}
           </Navbar.Section>
         </Navbar>
       }
