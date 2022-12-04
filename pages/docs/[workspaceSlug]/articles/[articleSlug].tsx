@@ -2,21 +2,27 @@ import { useRouter } from "next/router";
 import { Container } from "@mantine/core";
 import type { GetServerSidePropsContext } from "next";
 
-import { Article } from "@prisma/client";
+import { Article, Workspace } from "@prisma/client";
 import { getArticle } from "@lib/server/article";
 import Feedback from "@components/docs/Feedback";
 import ArticleInfo from "@components/docs/Article";
 import { getWorkspace } from "@lib/server/workspace";
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
 
-const Article = ({ article }: { article: Article }) => {
+const Article = ({
+  article,
+  workspace,
+}: {
+  article: Article;
+  workspace: Workspace;
+}) => {
   const router = useRouter();
 
   const { workspaceSlug } = router.query as { workspaceSlug: string };
 
   return (
     <>
-      <ArticleSearchBar workspaceSlug={workspaceSlug} />
+      <ArticleSearchBar workspace={workspace} />
       <Container size="md" px="xl" py="xl" className="bg-gray-50">
         <ArticleInfo article={article} />
         <Feedback article={article} />
@@ -51,7 +57,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   return {
-    props: { article: JSON.parse(JSON.stringify(article)) },
+    props: {
+      article: JSON.parse(JSON.stringify(article)),
+      workspace: JSON.parse(JSON.stringify(workspace)),
+    },
   };
 }
 

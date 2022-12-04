@@ -2,20 +2,26 @@ import { useRouter } from "next/router";
 import type { GetServerSidePropsContext } from "next";
 
 import prisma from "@lib/prisma";
-import { Article } from "@prisma/client";
+import { Article, Workspace } from "@prisma/client";
 import { getWorkspace } from "@lib/server/workspace";
 import { getCollection } from "@lib/server/collection";
 import ListArticles from "@components/docs/ListArticles";
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
 
-const Home = ({ articles }: { articles: Article[] }) => {
+const Home = ({
+  articles,
+  workspace,
+}: {
+  articles: Article[];
+  workspace: Workspace;
+}) => {
   const router = useRouter();
 
   const { workspaceSlug } = router.query as { workspaceSlug: string };
 
   return (
     <>
-      <ArticleSearchBar workspaceSlug={workspaceSlug} />
+      <ArticleSearchBar workspace={workspace} />
       <ListArticles workspaceSlug={workspaceSlug} articles={articles} />
     </>
   );
@@ -53,7 +59,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   return {
-    props: { articles: JSON.parse(JSON.stringify(articles)) },
+    props: {
+      articles: JSON.parse(JSON.stringify(articles)),
+      workspace: JSON.parse(JSON.stringify(workspace)),
+    },
   };
 }
 
