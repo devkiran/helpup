@@ -1,7 +1,7 @@
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ColorInput, Button, Stack, TextInput } from "@mantine/core";
+import { ColorInput, Button, Stack, TextInput, Box } from "@mantine/core";
 
 import Panel from "@components/core/Panel";
 import useWorkspace from "@lib/hooks/useWorkspace";
@@ -66,48 +66,46 @@ const Settings = () => {
 
   return (
     <main>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="space-y-6">
-            <Panel
-              title="Customize the Help Center"
-              description="Customize the look and feel of your Help Center."
-            >
-              <form onSubmit={form.onSubmit(handleSubmit)}>
-                <Stack>
-                  <TextInput
-                    withAsterisk
-                    label="Site name"
-                    placeholder="HelpUp"
-                    {...form.getInputProps("siteName")}
-                    required
-                  />
-                  <TextInput
-                    withAsterisk
-                    label="Heading"
-                    placeholder="Advice and answers from the HelpUp"
-                    {...form.getInputProps("heading")}
-                    required
-                  />
-                  <ColorInput
-                    withAsterisk
-                    disallowInput
-                    placeholder="Pick color"
-                    label="Header color"
-                    required
-                    format="rgb"
-                    {...form.getInputProps("headerColor")}
-                  />
-                  <div className="flex justify-end">
-                    <Button type="submit" color="cyan" loading={loading}>
-                      Save Changes
-                    </Button>
-                  </div>
-                </Stack>
-              </form>
-            </Panel>
-          </div>
-        </div>
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <Box mt="md">
+          <Panel
+            title="Customize the Help Center"
+            description="Customize the look and feel of your Help Center."
+          >
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+              <Stack>
+                <TextInput
+                  withAsterisk
+                  label="Site name"
+                  placeholder="HelpUp"
+                  {...form.getInputProps("siteName")}
+                  required
+                />
+                <TextInput
+                  withAsterisk
+                  label="Heading"
+                  placeholder="Advice and answers from the HelpUp"
+                  {...form.getInputProps("heading")}
+                  required
+                />
+                <ColorInput
+                  withAsterisk
+                  disallowInput
+                  placeholder="Pick color"
+                  label="Header color"
+                  required
+                  format="rgb"
+                  {...form.getInputProps("headerColor")}
+                />
+                <div className="flex justify-end">
+                  <Button type="submit" color="cyan" loading={loading}>
+                    Save Changes
+                  </Button>
+                </div>
+              </Stack>
+            </form>
+          </Panel>
+        </Box>
       </div>
     </main>
   );

@@ -27,13 +27,6 @@ const Collections = () => {
             <Button onClick={() => setOpened(true)} variant="outline">
               Create Collection
             </Button>
-            <Button
-              component={Link}
-              href={`/workspaces/${workspaceId}/articles`}
-              variant="outline"
-            >
-              All Articles
-            </Button>
           </Group>
         </Group>
         <Box mt="md">
