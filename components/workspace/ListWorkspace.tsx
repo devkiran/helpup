@@ -14,6 +14,7 @@ import {
 
 import useWorkspaces from "@lib/hooks/useWorkspaces";
 import EmptyState from "@components/core/EmptyState";
+import { getHelpCenterUrl } from "@lib/urls";
 
 const ListWorkspace = () => {
   const { workspaces, isLoading } = useWorkspaces();
@@ -62,7 +63,7 @@ const ListWorkspace = () => {
                     <Grid.Col span={6}>
                       <Button
                         component={Link}
-                        href={`/docs/${workspace.slug}`}
+                        href={getHelpCenterUrl(workspace.slug)}
                         variant="outline"
                         size="xs"
                         color="cyan"

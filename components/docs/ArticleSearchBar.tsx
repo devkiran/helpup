@@ -2,6 +2,7 @@ import { IconSearch } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import { Title, TextInput } from "@mantine/core";
 
+import { getArticleUrl, getSearchUrl } from "@lib/urls";
 import { Article, Workspace } from "@prisma/client";
 
 type SearchResults = Pick<Article, "title" | "slug">[];
@@ -30,15 +31,7 @@ const ArticleSearchBar = (props: ArticleSearchBarProps) => {
         return;
       }
 
-      const response = await fetch(
-        `/api/workspaces/${
-          workspace.slug
-        }/articles/autocomplete?${new URLSearchParams({ searchTerm })}`
-      );
-
-      const { data }: { data: SearchResults } = await response.json();
-
-      setSearchResults(data);
+      setSearchResults(await fetchArticles(searchTerm, workspace.id));
     };
 
     autocompleteArticles();
@@ -48,7 +41,7 @@ const ArticleSearchBar = (props: ArticleSearchBarProps) => {
     setSearchTerm("");
     setSearchResults([]);
 
-    window.location.href = `/docs/${workspace.slug}/articles/${slug}`;
+    window.location.href = getArticleUrl(workspace.slug, slug);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +60,7 @@ const ArticleSearchBar = (props: ArticleSearchBarProps) => {
             <form
               className="w-full"
               method="GET"
-              action={`/docs/${workspace.slug}/search`}
+              action={getSearchUrl(workspace.slug)}
             >
               <TextInput
                 icon={<IconSearch size={18} stroke={1.5} />}
@@ -112,6 +105,25 @@ const SearchResultItems = (props: SearchResultItemsProps) => {
       ))}
     </ul>
   );
+};
+
+// Call Atlas endpoint to fetch articles based on search term
+const fetchArticles = async (searchTerm: string, workspaceId: string) => {
+  const url = new URL(
+    `${process.env.NEXT_PUBLIC_ATLAS_APP_URL}/autocompleteArticles`
+  );
+
+  url.searchParams.set("searchTerm", searchTerm);
+  url.searchParams.set("workspaceId", workspaceId);
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return await response.json();
 };
 
 export default ArticleSearchBar;

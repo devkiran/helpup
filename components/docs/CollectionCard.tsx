@@ -1,6 +1,7 @@
 import { Title, Paper, Text, Avatar, Anchor } from "@mantine/core";
 
 import { Collection, Article } from "@prisma/client";
+import { getCollectionUrl } from "@lib/urls";
 
 const CollectionCard = ({
   collection,
@@ -21,7 +22,7 @@ const CollectionCard = ({
         <Text align="center" color="dimmed" lineClamp={2}>
           {collection.description}
         </Text>
-        <Anchor href={`/docs/${workspaceSlug}/collections/${collection.slug}`}>
+        <Anchor href={getCollectionUrl(workspaceSlug, collection.slug)}>
           {collection.articles.length} articles
         </Anchor>
       </div>

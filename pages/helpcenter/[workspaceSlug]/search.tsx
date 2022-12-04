@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import type { GetServerSidePropsContext } from "next";
 
 import { Article, Workspace } from "@prisma/client";
-import { searchArticles } from "@lib/server/atlas";
 import { getWorkspace } from "@lib/server/workspace";
 import ListArticles from "@components/docs/ListArticles";
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
+import { getHelpCenterUrl } from "@lib/urls";
 
 const Search = ({
   articles,
@@ -40,16 +40,16 @@ const Search = ({
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { workspaceSlug, q } = context.query as {
+  const { workspaceSlug, q: searchTerm } = context.query as {
     workspaceSlug: string;
     q: string;
   };
 
-  if (!q) {
+  if (!searchTerm) {
     return {
       redirect: {
         permanent: false,
-        destination: `/docs/${workspaceSlug}`,
+        destination: getHelpCenterUrl(workspaceSlug),
       },
     };
   }
@@ -62,7 +62,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const articles = await searchArticles(q, workspace.id);
+  // Call Atlas endpoint to search for articles
+  const url = new URL(
+    `${process.env.NEXT_PUBLIC_ATLAS_APP_URL}/searchArticles`
+  );
+
+  url.searchParams.set("searchTerm", searchTerm);
+  url.searchParams.set("workspaceId", workspace.id);
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const articles = await response.json();
 
   return {
     props: {

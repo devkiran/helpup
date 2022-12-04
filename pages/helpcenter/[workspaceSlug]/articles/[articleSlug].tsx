@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { Container } from "@mantine/core";
 import type { GetServerSidePropsContext } from "next";
 
@@ -17,8 +16,6 @@ const Article = ({
   article: Article;
   workspace: Workspace;
 }) => {
-  const router = useRouter();
-
   return (
     <>
       <Head>

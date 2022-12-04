@@ -3,6 +3,7 @@ import { Title, Container, Paper, Text, Stack, Highlight } from "@mantine/core";
 
 import { formatDate } from "@lib/date";
 import { Article } from "@prisma/client";
+import { getArticleUrl } from "@lib/urls";
 
 const ListArticles = ({
   workspaceSlug,
@@ -25,7 +26,7 @@ const ListArticles = ({
         ) : (
           articles.map((article) => (
             <Link
-              href={`/docs/${workspaceSlug}/articles/${article.slug}`}
+              href={getArticleUrl(workspaceSlug, article.slug)}
               key={article.title}
             >
               <Paper shadow="xs" p="lg">
