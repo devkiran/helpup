@@ -32,13 +32,6 @@ const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
     articleId: string;
   };
 
-  const { title, contentText, contentHtml, collectionId } = req.body as {
-    title: string;
-    contentText: string;
-    contentHtml: string;
-    collectionId: string;
-  };
-
   const article = await getArticle({ workspaceId, id: articleId });
 
   res.status(200).json({ data: article });
