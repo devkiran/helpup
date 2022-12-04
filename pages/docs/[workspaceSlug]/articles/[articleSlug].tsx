@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { Container } from "@mantine/core";
 import type { GetServerSidePropsContext } from "next";
@@ -18,10 +19,13 @@ const Article = ({
 }) => {
   const router = useRouter();
 
-  const { workspaceSlug } = router.query as { workspaceSlug: string };
-
   return (
     <>
+      <Head>
+        <title>
+          {article.title} | {workspace.siteName}
+        </title>
+      </Head>
       <ArticleSearchBar workspace={workspace} />
       <Container size="md" px="xl" py="xl" className="bg-gray-50">
         <ArticleInfo article={article} />

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { Container } from "@mantine/core";
 import type { GetServerSidePropsContext } from "next";
@@ -23,6 +24,9 @@ const Home = ({
 
   return (
     <>
+      <Head>
+        <title>{workspace.siteName}</title>
+      </Head>
       <ArticleSearchBar workspace={workspace} />
       <Container size="xl" px="xl" py="xl" className="bg-gray-50">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-6 gap-6">

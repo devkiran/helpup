@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import type { GetServerSidePropsContext } from "next";
 
@@ -21,6 +22,9 @@ const Home = ({
 
   return (
     <>
+      <Head>
+        <title>{workspace.siteName}</title>
+      </Head>
       <ArticleSearchBar workspace={workspace} />
       <ListArticles workspaceSlug={workspaceSlug} articles={articles} />
     </>

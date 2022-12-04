@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import type { GetServerSidePropsContext } from "next";
 
@@ -5,7 +6,6 @@ import { Article, Workspace } from "@prisma/client";
 import { searchArticles } from "@lib/server/atlas";
 import { getWorkspace } from "@lib/server/workspace";
 import ListArticles from "@components/docs/ListArticles";
-
 import ArticleSearchBar from "@components/docs/ArticleSearchBar";
 
 const Search = ({
@@ -24,6 +24,11 @@ const Search = ({
 
   return (
     <>
+      <Head>
+        <title>
+          Search results for "{q}" | {workspace.siteName}
+        </title>
+      </Head>
       <ArticleSearchBar workspace={workspace} q={q} />
       <ListArticles
         workspaceSlug={workspaceSlug}
