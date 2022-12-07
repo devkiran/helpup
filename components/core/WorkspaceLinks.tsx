@@ -44,13 +44,6 @@ export const WorkspaceLinks = (props: WorkspaceLinksProps) => {
       href: `/workspaces/${workspaceId}/settings`,
       active: currentPath === `/workspaces/${workspaceId}/settings`,
     },
-    {
-      icon: <IconChartAreaLine size={24} />,
-      color: "red",
-      label: "Analytics",
-      href: `/workspaces/${workspaceId}/analytics`,
-      active: currentPath === `/workspaces/${workspaceId}/analytics`,
-    },
   ] as const;
 
   return (

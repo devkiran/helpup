@@ -14,7 +14,7 @@ exports = function ({ query, headers, body }, response) {
               {
                 autocomplete: {
                   query: searchTerm,
-                  path: "contentText",
+                  path: "title",
                 },
               },
             ],
