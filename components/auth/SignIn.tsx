@@ -75,9 +75,6 @@ const SignIn = () => {
                 <Title order={2} align="center">
                   Sign in to your account
                 </Title>
-                <Text size="md" align="center">
-                  The quickest way to start using Tailwind CSS in your Next.js
-                </Text>
               </div>
               <form
                 className="space-y-3"

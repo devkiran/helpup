@@ -61,9 +61,6 @@ const ForgotPassword = () => {
                 <Title order={2} align="center">
                   Reset Password
                 </Title>
-                <Text size="md" align="center">
-                  The quickest way to start using Tailwind CSS in your Next.js
-                </Text>
               </div>
               <form
                 className="space-y-3"
