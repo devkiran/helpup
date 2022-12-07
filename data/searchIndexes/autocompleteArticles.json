@@ -4,7 +4,13 @@
     "fields": {
       "title": {
         "type": "autocomplete"
+      },
+      "workspaceId": {
+        "type": "objectId"
       }
     }
+  },
+  "storedSource": {
+    "include": ["workspaceId"]
   }
 }
