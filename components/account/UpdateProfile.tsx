@@ -64,7 +64,7 @@ const UpdateName = () => {
   return (
     <Panel
       title="Your Profile"
-      description="Please enter your full name, or a display name you are comfortable with."
+      description="Update your profile details below."
     >
       <form className="space-y-4" onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput placeholder="Your name" {...form.getInputProps("name")} />

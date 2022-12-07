@@ -46,7 +46,7 @@ const UpdateEmail = () => {
   return (
     <Panel
       title="Your Email"
-      description="Please enter the email address you want to use to log in with Vercel."
+      description="Please enter the email address you want to use to log in with HelpUp."
     >
       <form className="space-y-4" onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput placeholder="Your email" {...form.getInputProps("email")} />

@@ -46,7 +46,7 @@ const UpdatePassword = () => {
   return (
     <Panel
       title="Change Your Password"
-      description="Please enter your full name, or a display name you are comfortable with."
+      description="Enter your new password below."
     >
       <form className="space-y-4" onSubmit={form.onSubmit(handleSubmit)}>
         <PasswordInput
